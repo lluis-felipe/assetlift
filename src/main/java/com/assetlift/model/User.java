@@ -1,10 +1,6 @@
 package com.assetlift.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -15,9 +11,19 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "access")
+    private String access;
+
     @Column(name = "username")
     private String username;
 
     @Column(name = "password")
     private String password;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person person;
 }
