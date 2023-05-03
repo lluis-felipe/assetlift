@@ -18,12 +18,10 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
-        User user = userService.getUser(id);
-
+        var user = userService.getUser(id);
         if (user != null) {
             return ResponseEntity.ok(user);
         }
-
         return ResponseEntity.notFound().build();
     }
 
@@ -34,30 +32,26 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> saveUser(@RequestBody User userIn) throws URISyntaxException {
-        User userOut = userService.saveUser(userIn);
+        var userOut = userService.saveUser(userIn);
         return ResponseEntity.created(new URI("/users/" + userOut.getId())).body(userOut);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userIn) throws URISyntaxException {
-        User userOut = userService.updateUser(id, userIn);
-
+        var userOut = userService.updateUser(id, userIn);
         if (userOut != null) {
             return ResponseEntity.noContent().build();
         }
-
         return saveUser(userIn);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable Long id) {
-        User user = userService.getUser(id);
-
+        var user = userService.getUser(id);
         if (user != null) {
             userService.deleteUser(id);
             return ResponseEntity.noContent().build();
         }
-
         return ResponseEntity.notFound().build();
     }
 }
