@@ -9,6 +9,7 @@ import lombok.Data;
 public class Person {
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "person")

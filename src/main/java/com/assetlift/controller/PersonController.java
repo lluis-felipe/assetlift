@@ -18,12 +18,10 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Person> getPerson(@PathVariable Long id) {
-        Person person = personService.getPerson(id);
-
+        var person = personService.getPerson(id);
         if (person != null) {
             return ResponseEntity.ok(person);
         }
-
         return ResponseEntity.notFound().build();
     }
 
@@ -34,30 +32,26 @@ public class PersonController {
 
     @PostMapping
     public ResponseEntity<Person> savePerson(@RequestBody Person personIn) throws URISyntaxException {
-        Person personOut = personService.savePerson(personIn);
+        var personOut = personService.savePerson(personIn);
         return ResponseEntity.created(new URI("/persons/" + personOut.getId())).body(personOut);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Person> updatePerson(@PathVariable Long id, @RequestBody Person personIn) throws URISyntaxException {
-        Person personOut = personService.updatePerson(id, personIn);
-
+        var personOut = personService.updatePerson(id, personIn);
         if (personOut != null) {
             return ResponseEntity.noContent().build();
         }
-
         return savePerson(personIn);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Person> deletePerson(@PathVariable Long id) {
-        Person person = personService.getPerson(id);
-
+        var person = personService.getPerson(id);
         if (person != null) {
             personService.deletePerson(id);
             return ResponseEntity.noContent().build();
         }
-
         return ResponseEntity.notFound().build();
     }
 }

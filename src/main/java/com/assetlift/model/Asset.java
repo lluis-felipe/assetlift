@@ -1,7 +1,11 @@
 package com.assetlift.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -9,6 +13,7 @@ import lombok.Data;
 public class Asset {
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "type")
@@ -40,4 +45,9 @@ public class Asset {
 
     @Column(name = "usefullife")
     private String usefullife;
+
+    @OneToMany(mappedBy = "asset", cascade = CascadeType.ALL)
+    @Column(nullable = true)
+    @JsonManagedReference
+    private List<AssetHistory> history = new ArrayList<>();
 }
