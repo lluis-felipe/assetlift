@@ -46,7 +46,16 @@ public class Asset {
     @Column(name = "usefullife")
     private String usefullife;
 
-    @OneToMany(mappedBy = "asset", cascade = CascadeType.ALL)
+    @Column(name = "acquisitioncost")
+    private String acquisitioncost;
+
+    @Column(name = "residualvalue")
+    private String residualvalue;
+
+    @Column(name = "associatedasset")
+    private String associatedasset;
+
+    @OneToMany(mappedBy = "asset", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @Column(nullable = true)
     @JsonManagedReference
     private List<AssetHistory> history = new ArrayList<>();

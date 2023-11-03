@@ -3,6 +3,7 @@ package com.assetlift.controller;
 import com.assetlift.model.Person;
 import com.assetlift.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/personlift/person")
+@RequestMapping("/assetlift/person")
 public class PersonController {
     @Autowired
     private PersonService personService;
@@ -34,6 +35,15 @@ public class PersonController {
     public ResponseEntity<Person> savePerson(@RequestBody Person personIn) throws URISyntaxException {
         var personOut = personService.savePerson(personIn);
         return ResponseEntity.created(new URI("/persons/" + personOut.getId())).body(personOut);
+    }
+
+    @PostMapping("onboarding")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Person> savePeople(@RequestBody List<Person> peopleIn) throws URISyntaxException {
+        for (Person personIn : peopleIn) {
+            personService.savePerson(personIn);
+        }
+        return peopleIn;
     }
 
     @PutMapping("/{id}")
