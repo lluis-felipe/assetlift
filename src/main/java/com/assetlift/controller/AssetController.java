@@ -3,6 +3,7 @@ package com.assetlift.controller;
 import com.assetlift.model.Asset;
 import com.assetlift.service.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,15 @@ public class AssetController {
     public ResponseEntity<Asset> saveAsset(@RequestBody Asset assetIn) throws URISyntaxException {
         var assetOut = assetService.saveAsset(assetIn);
         return ResponseEntity.created(new URI("/assets/" + assetOut.getId())).body(assetOut);
+    }
+
+    @PostMapping("onboarding")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Asset> saveAssets(@RequestBody List<Asset> assetsIn) throws URISyntaxException {
+        for (Asset assetIn : assetsIn) {
+            assetService.saveAsset(assetIn);
+        }
+        return assetsIn;
     }
 
     @PutMapping("/{id}")
