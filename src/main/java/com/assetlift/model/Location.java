@@ -48,8 +48,8 @@ public class Location {
     private String description;
 
     @Column(name = "created_date")
-    private Date createdDate;
+    private String createdDate;
 
     @Column(name = "last_modified_date")
-    private Date lastModifiedDate;
+    private String lastModifiedDate;
 }
